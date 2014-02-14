@@ -1,0 +1,1 @@
+powershell .\GetSVNRevisions.ps1 c:\_svn\BOOK\book\db\trunk\

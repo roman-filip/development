@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:RFI.Pomodoro"
         WindowStartupLocation="CenterScreen"
-        Title="TimerView" Height="100" Width="150" Background="Black" Topmost="True">
+        Title="TimerView" Height="80" Width="140" Background="Black" Topmost="True">
 
     <Window.DataContext>
         <viewModels:TimerViewModel x:Name="timerViewModel" />

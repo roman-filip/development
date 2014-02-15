@@ -43,8 +43,6 @@ namespace RFI.Pomodoro
 
             _timer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
             _timer.Elapsed += _timer_Elapsed;
-
-            OnStarTimer();
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -55,17 +53,7 @@ namespace RFI.Pomodoro
             }
         }
 
-        private void OnStarTimer()
-        {
-            _timer.Start();
-        }
-
-        private void OnStopTimer()
-        {
-            _timer.Stop();
-        }
-
-        private void OnResetTimer()
+        private void ResetTimer()
         {
             _timer.Stop();
             ActualTime = _workDuration;
@@ -81,12 +69,12 @@ namespace RFI.Pomodoro
 
         public bool ResetTimerCommandCanExecute()
         {
-            return _timer.Enabled;
+            return true;
         }
 
         public void ResetTimerCommandExecuted()
         {
-            OnResetTimer();
+            ResetTimer();
         }
 
         #endregion
@@ -102,7 +90,14 @@ namespace RFI.Pomodoro
 
         public void StartPauseTimerCommandExecuted()
         {
-
+            if (_timer.Enabled)
+            {
+                _timer.Stop();
+            }
+            else
+            {
+                _timer.Start();
+            }
         }
 
         #endregion

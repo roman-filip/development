@@ -12,10 +12,10 @@ $releaseCode = "PH_2013_01"
 # Functions
 function Debug($message)
 {
-	if ($debug)
-	{
-		Write-Host -ForegroundColor Gray $message
-	}
+    if ($debug)
+    {
+        Write-Host -ForegroundColor Gray $message
+    }
 }
 
 function Get-FileEncoding([string]$Path)

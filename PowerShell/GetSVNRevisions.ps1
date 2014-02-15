@@ -24,6 +24,6 @@ $directory = $args[0]
 
 foreach ($file in Get-ChildItem $directory -Recurse -Include *.pck, *.spc)
 {
-	$revision = GetRevision($file)
+    $revision = GetRevision($file)
     Write-Host $file.FullName "-$revision"
 }

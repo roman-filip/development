@@ -1,18 +1,18 @@
 function GetProjects
 {
-	$cnt = 0
-	foreach ($file in Get-ChildItem ./ -Recurse -Filter "*.csproj")
-	{
-		Write-Host $file.Name - $file.DirectoryName
-		$cnt++
-	}
-	Write-Host "Count of projects:" $cnt
+    $cnt = 0
+    foreach ($file in Get-ChildItem ./ -Recurse -Filter "*.csproj")
+    {
+        Write-Host $file.Name - $file.DirectoryName
+        $cnt++
+    }
+    Write-Host "Count of projects:" $cnt
 }
 
 function GetCntOfFiles([string] $filter)
 {
-	$files = Get-ChildItem ./ -Recurse -Filter $filter
-	return $files.Count
+    $files = Get-ChildItem ./ -Recurse -Filter $filter
+    return $files.Count
 }
 
 function GetFileContent([string] $fileName)

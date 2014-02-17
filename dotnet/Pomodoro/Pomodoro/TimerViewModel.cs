@@ -2,6 +2,9 @@
 using RFI.Pomodoro.Properties;
 using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Media;
+using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Input;
 
@@ -12,6 +15,8 @@ namespace RFI.Pomodoro
         private readonly TimeSpan _workDuration;
 
         private readonly TimeSpan _breakDuration;
+
+        private readonly SoundPlayer _soundPlayer;
 
         #region ActualTime
         private TimeSpan _actualTime;
@@ -26,6 +31,11 @@ namespace RFI.Pomodoro
             {
                 _actualTime = value;
                 RaisePropertyChanged("ActualTime");
+
+                if (value.TotalSeconds == 0)
+                {
+                    PlaySound();
+                }
             }
         }
         #endregion
@@ -43,6 +53,8 @@ namespace RFI.Pomodoro
 
             _timer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
             _timer.Elapsed += _timer_Elapsed;
+
+            _soundPlayer = new SoundPlayer(@".\Sounds\Windows Ringin.wav");
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -57,8 +69,11 @@ namespace RFI.Pomodoro
         {
             _timer.Stop();
             ActualTime = _workDuration;
+        }
 
-            ((DelegateCommand)ResetTimerCommand).RasieCanExecuteChanged();
+        private void PlaySound()
+        {
+            Enumerable.Range(0, 3).ToList().ForEach(i => _soundPlayer.PlaySync());
         }
 
         #region Commands

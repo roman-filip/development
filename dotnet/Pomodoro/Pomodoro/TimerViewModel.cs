@@ -1,9 +1,9 @@
-﻿using System;
+﻿using RFI.Pomodoro.Helpers;
+using RFI.Pomodoro.Properties;
+using System;
 using System.ComponentModel;
 using System.Timers;
 using System.Windows.Input;
-using RFI.Pomodoro.Helpers;
-using RFI.Pomodoro.Properties;
 
 namespace RFI.Pomodoro
 {

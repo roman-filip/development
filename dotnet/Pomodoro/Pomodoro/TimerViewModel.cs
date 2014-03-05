@@ -54,7 +54,7 @@ namespace RFI.Pomodoro
             _timer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
             _timer.Elapsed += _timer_Elapsed;
 
-            _soundPlayer = new SoundPlayer(@".\Sounds\Windows Ringin.wav");
+            _soundPlayer = new SoundPlayer(@".\Sounds\Windows Ringin_louder.wav");
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)

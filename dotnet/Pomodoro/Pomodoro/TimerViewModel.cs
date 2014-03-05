@@ -1,20 +1,28 @@
-﻿using RFI.Pomodoro.Helpers;
-using RFI.Pomodoro.Properties;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
-using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Input;
+using RFI.Pomodoro.Helpers;
+using RFI.Pomodoro.Properties;
 
 namespace RFI.Pomodoro
 {
+    enum PeriodType
+    {
+        Unknown = 0,
+        Work,
+        Break
+    }
+
     class TimerViewModel : INotifyPropertyChanged
     {
         private readonly TimeSpan _workDuration;
 
         private readonly TimeSpan _breakDuration;
+
+        private PeriodType _periodType = PeriodType.Work;
 
         private readonly SoundPlayer _soundPlayer;
 
@@ -63,17 +71,37 @@ namespace RFI.Pomodoro
             {
                 ActualTime = ActualTime.Subtract(TimeSpan.FromSeconds(1));
             }
+            else
+            {
+                _timer.Stop();
+
+                PlaySound();
+
+                if (_periodType == PeriodType.Work)
+                {
+                    _periodType = PeriodType.Break;
+                    ActualTime = _breakDuration;
+
+                    _timer.Start();
+                }
+                else
+                {
+                    _periodType = PeriodType.Work;
+                    ActualTime = _workDuration;
+                }
+            }
         }
 
         private void ResetTimer()
         {
             _timer.Stop();
             ActualTime = _workDuration;
+            _periodType = PeriodType.Work;
         }
 
         private void PlaySound()
         {
-            Enumerable.Range(0, 3).ToList().ForEach(i => _soundPlayer.PlaySync());
+            _soundPlayer.PlaySync();
         }
 
         #region Commands

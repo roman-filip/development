@@ -94,9 +94,12 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sounds\Windows Ringin.wav">
+    <None Include="Sounds\Windows Ringin.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sounds\Windows Ringin_louder.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

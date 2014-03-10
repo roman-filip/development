@@ -1,0 +1,1 @@
+powershell c:\_GitHub\development\PowerShell\SetPowerPlan.ps1 'High performance'

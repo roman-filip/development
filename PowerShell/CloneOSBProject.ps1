@@ -1,4 +1,4 @@
-﻿# Parameters
+# Parameters
 $debug = $true
 $sourceSVN = "https://subversion.homecredit.net/repos/esb/osb/projects/id"
 # $sourceSVN = "https://subversion.homecredit.net/repos/esb/osb/projects/id@3474"
@@ -14,7 +14,7 @@ function Debug($message)
 {
     if ($debug)
     {
-        Write-Host -ForegroundColor Gray $message
+        Write-Output -ForegroundColor Gray $message
     }
 }
 

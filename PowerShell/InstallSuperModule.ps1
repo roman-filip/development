@@ -1,4 +1,4 @@
-﻿if ($args.Length -ne 1)
+if ($args.Length -ne 1)
 {
     return "ERROR: missing name of supermodule"
 }

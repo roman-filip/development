@@ -6,7 +6,7 @@ function Debug($message)
 {
     if ($debug)
     {
-        Write-Host -ForegroundColor Gray $message
+        Write-Output -ForegroundColor Gray $message
     }
 }
 
@@ -18,23 +18,23 @@ function GetProjects
 
 function Wiki_GenerateHeaderH2($headerText)
 {
-    Write-Host "h2." $headerText
+    Write-Output "h2." $headerText
 }
 
 function Wiki_GenerateTableHeader
 {
-    Write-Host "{table-plus:sortIcon=true|enableHighlighting=true}"
-    Write-Host "|| Modul || Cesta || Vlastník || Popis ||"
+    Write-Output "{table-plus:sortIcon=true|enableHighlighting=true}"
+    Write-Output "|| Modul || Cesta || Vlastník || Popis ||"
 }
 
 function Wiki_GenerateTableFooter
 {
-    Write-Host "{table-plus}"
+    Write-Output "{table-plus}"
 }
 
 function Wiki_GenerateHREF($url)
 {
-    Write-Host "[$url]"
+    Write-Output "[$url]"
 }
 
 
@@ -60,7 +60,7 @@ foreach ($clone in $clones)
     $projects = GetProjects
     foreach ($project in $projects)
     {
-        Write-Host "|" $project.BaseName "|" $project.FullName.Replace($currentPath, "") "| | |"
+        Write-Output "|" $project.BaseName "|" $project.FullName.Replace($currentPath, "") "| | |"
     }
     
     Wiki_GenerateTableFooter

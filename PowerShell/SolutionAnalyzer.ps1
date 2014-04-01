@@ -3,10 +3,10 @@ function GetProjects
     $cnt = 0
     foreach ($file in Get-ChildItem ./ -Recurse -Filter "*.csproj")
     {
-        Write-Host $file.Name - $file.DirectoryName
+        Write-Output $file.Name - $file.DirectoryName
         $cnt++
     }
-    Write-Host "Count of projects:" $cnt
+    Write-Output "Count of projects:" $cnt
 }
 
 function GetCntOfFiles([string] $filter)
@@ -73,9 +73,9 @@ cls
 cd c:\_svn\dotnet\CS\trunk
 
 GetProjects
-#write-host ("Count of projects: {0}" -f (GetCntOfFiles "*.csproj"))
-#write-host ("Count of AssemblyInfo.cs: {0}" -f (GetCntOfFiles "AssemblyInfo.cs"))
-#write-host ("Count of views: {0}" -f (GetCntOfFiles "*.Designer.cs"))
+#Write-Output ("Count of projects: {0}" -f (GetCntOfFiles "*.csproj"))
+#Write-Output ("Count of AssemblyInfo.cs: {0}" -f (GetCntOfFiles "AssemblyInfo.cs"))
+#Write-Output ("Count of views: {0}" -f (GetCntOfFiles "*.Designer.cs"))
 #GetFileContent("AssemblyInfo.cs")
 #GetFileContent("*.csproj")
 #WriteFilesWithoutText "AssemblyInfo.cs" "assembly: HCI.Infrastructure.TraceLog.TraceLog"

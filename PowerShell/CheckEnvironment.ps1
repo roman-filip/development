@@ -1,4 +1,4 @@
-﻿$username = "manager"
+$username = "manager"
 $password = "manager1"
 $secstr = New-Object -TypeName System.Security.SecureString
 $password.ToCharArray() | ForEach-Object {$secstr.AppendChar($_)}
@@ -12,11 +12,11 @@ function CheckEnvironment($environment)
     {
         if ($response.AllElements[$i].value -ieq $environment)
         {
-            Write-Host $environment
-            Write-Host "******"
-            Write-Host "HTTP Status: " $response.AllElements[$i + 4].outerText
-            Write-Host "Login Status:" $response.AllElements[$i + 5].outerText
-            Write-Host "Version:     " $response.AllElements[$i + 6].outerText
+            Write-Output $environment
+            Write-Output "******"
+            Write-Output "HTTP Status: " $response.AllElements[$i + 4].outerText
+            Write-Output "Login Status:" $response.AllElements[$i + 5].outerText
+            Write-Output "Version:     " $response.AllElements[$i + 6].outerText
         }
     }
 }

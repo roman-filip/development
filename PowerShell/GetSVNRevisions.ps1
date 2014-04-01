@@ -1,4 +1,4 @@
-﻿function GetRevision($file)
+function GetRevision($file)
 {
     $fileContent = Get-Content $file.FullName
    
@@ -25,5 +25,5 @@ $directory = $args[0]
 foreach ($file in Get-ChildItem $directory -Recurse -Include *.pck, *.spc)
 {
     $revision = GetRevision($file)
-    Write-Host $file.FullName "-$revision"
+    Write-Output $file.FullName "-$revision"
 }

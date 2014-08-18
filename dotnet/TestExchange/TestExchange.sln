@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestExchange", "TestExchange\TestExchange.csproj", "{6CDE3493-70F7-4AB8-8229-9AAFF1055A8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{E9653C86-465F-4E4A-B722-8B79BB3D9896}"
+	ProjectSection(SolutionItems) = preProject
+		lib\GettingStarted.doc = lib\GettingStarted.doc
+		lib\License Terms.rtf = lib\License Terms.rtf
+		lib\Microsoft.Exchange.WebServices.Auth.dll = lib\Microsoft.Exchange.WebServices.Auth.dll
+		lib\Microsoft.Exchange.WebServices.Auth.xml = lib\Microsoft.Exchange.WebServices.Auth.xml
+		lib\Microsoft.Exchange.WebServices.dll = lib\Microsoft.Exchange.WebServices.dll
+		lib\Microsoft.Exchange.WebServices.xml = lib\Microsoft.Exchange.WebServices.xml
+		lib\README.htm = lib\README.htm
+		lib\Redist.txt = lib\Redist.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CDE3493-70F7-4AB8-8229-9AAFF1055A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDE3493-70F7-4AB8-8229-9AAFF1055A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDE3493-70F7-4AB8-8229-9AAFF1055A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDE3493-70F7-4AB8-8229-9AAFF1055A8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

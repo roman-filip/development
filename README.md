@@ -1,3 +1,0 @@
-Píchačky
-===========
-Time tracker tool

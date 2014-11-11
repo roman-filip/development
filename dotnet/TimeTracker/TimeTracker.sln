@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.WindowsViews", "TimeTracker.WindowsViews\TimeTracker.WindowsViews.csproj", "{6EB20761-EB4A-4578-AF2C-4BA8E8AC0301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.ViewModels", "TimeTracker.ViewModels\TimeTracker.ViewModels.csproj", "{19F6CB33-B581-4B9B-8F79-874F3FC6CC38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Models", "TimeTracker.Models\TimeTracker.Models.csproj", "{70E7AF10-21E5-470A-B683-FD6F84EDD045}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EB20761-EB4A-4578-AF2C-4BA8E8AC0301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB20761-EB4A-4578-AF2C-4BA8E8AC0301}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB20761-EB4A-4578-AF2C-4BA8E8AC0301}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB20761-EB4A-4578-AF2C-4BA8E8AC0301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19F6CB33-B581-4B9B-8F79-874F3FC6CC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19F6CB33-B581-4B9B-8F79-874F3FC6CC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19F6CB33-B581-4B9B-8F79-874F3FC6CC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19F6CB33-B581-4B9B-8F79-874F3FC6CC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70E7AF10-21E5-470A-B683-FD6F84EDD045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70E7AF10-21E5-470A-B683-FD6F84EDD045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70E7AF10-21E5-470A-B683-FD6F84EDD045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70E7AF10-21E5-470A-B683-FD6F84EDD045}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

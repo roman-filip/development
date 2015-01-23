@@ -16,6 +16,17 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
+            var address = "brno";
+            var oldAddress = address;
+            Console.WriteLine(address);
+            Console.WriteLine(oldAddress);
+            DoSomething(address);
+            Console.WriteLine(address);
+            Console.WriteLine(oldAddress);
+
+
+
+
             bool aa = false;
 
             if (aa.IsTrue())
@@ -43,6 +54,11 @@ namespace ConsoleApplication1
             }
 
             Console.ReadLine();
+        }
+
+        private static void DoSomething(string address)
+        {
+            address = "Brno";
         }
     }
 

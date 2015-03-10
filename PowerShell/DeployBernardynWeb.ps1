@@ -76,7 +76,7 @@ function GenerateVersionFile
     $gitShortVersion = git -C $gitRepoDir rev-parse --short HEAD
 
     $versionInfo = 
-        "Hudson: `r`n" +
+        "Jenkins: `r`n" +
         "  build number: $BuildNr `r`n" +
         "  build started by: $StartedBy `r`n" +
         "  build date: " + (Get-Date).ToString() + "`r`n`r`n" +

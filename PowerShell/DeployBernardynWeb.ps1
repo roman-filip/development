@@ -6,6 +6,8 @@ PARAM
     [Parameter(Mandatory=$true)]
     [string]$TargetDir,
     [Parameter(Mandatory=$false)]
+    [string]$JobName,
+    [Parameter(Mandatory=$false)]
     [string]$BuildNr,
     [Parameter(Mandatory=$false)]
     [string]$StartedBy
@@ -40,6 +42,7 @@ function LogInputParameters
 
     Write-Host "  BaseDir:   $BaseDir"
     Write-Host "  TargetDir: $TargetDir"
+    Write-Host "  JobName:   $JobName"
     Write-Host "  BuildNr:   $BuildNr"
     Write-Host "  StartedBy: $StartedBy"
 }

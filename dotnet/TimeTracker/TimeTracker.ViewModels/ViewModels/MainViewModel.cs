@@ -114,17 +114,7 @@ namespace RFI.TimeTracker.ViewModels
         {
             var actualTime = GetActualTime();
 
-            var actualTimesheet =
-                Timesheets.FirstOrDefault(timesheet => timesheet.Month == actualTime.Month && timesheet.Year == actualTime.Year);
-            if (actualTimesheet == null)
-            {
-                actualTimesheet = new Timesheet
-                {
-                    Month = actualTime.Month,
-                    Year = actualTime.Year
-                };
-                Timesheets.Insert(0, actualTimesheet);
-            }
+            var actualTimesheet = GetActualTimesheet(actualTime);
 
             var actualTimesheetEntry =
                 actualTimesheet.TimesheetEntries.FirstOrDefault(te =>
@@ -139,6 +129,23 @@ namespace RFI.TimeTracker.ViewModels
             }
 
             return actualTimesheetEntry;
+        }
+
+        private Timesheet GetActualTimesheet(DateTime actualTime)
+        {
+            var actualTimesheet =
+                Timesheets.FirstOrDefault(timesheet => timesheet.Month == actualTime.Month && timesheet.Year == actualTime.Year);
+            if (actualTimesheet == null)
+            {
+                actualTimesheet = new Timesheet
+                {
+                    Month = actualTime.Month,
+                    Year = actualTime.Year
+                };
+                Timesheets.Insert(0, actualTimesheet);
+            }
+
+            return actualTimesheet;
         }
 
         private DateTime GetActualTime()

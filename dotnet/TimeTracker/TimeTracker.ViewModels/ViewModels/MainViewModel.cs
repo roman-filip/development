@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using RFI.TimeTracker.Models;
+using AutoMapper;
+using RFI.TimeTracker.ViewModels.Entities;
 using RFI.TimeTracker.ViewModels.Interfaces;
+using Model = RFI.TimeTracker.Models;
 
 namespace RFI.TimeTracker.ViewModels
 {
-    public class MainViewModel : BaseNotifyObject
+    public class MainViewModel : Model.BaseNotifyObject
     {
         private ITimesheetService _timesheetService;
         private ObservableCollection<Timesheet> _timesheets;
@@ -22,10 +25,13 @@ namespace RFI.TimeTracker.ViewModels
             {
                 if (_timesheets == null)
                 {
+                    var timesheetsModel = _timesheetService.LoadAllTimesheets();
+                    var timesheets = Mapper.Map<List<Timesheet>>(timesheetsModel);
+
                     _timesheets = new ObservableCollection<Timesheet>(
-                        _timesheetService.LoadAllTimesheets()
-                            .OrderByDescending(timesheet => timesheet.Year)
-                            .ThenByDescending(timesheet => timesheet.Month));
+                        timesheets
+                        .OrderByDescending(timesheet => timesheet.Year)
+                        .ThenByDescending(timesheet => timesheet.Month));
 
                     SelectedTimesheet = _timesheets.FirstOrDefault();
                 }
@@ -162,7 +168,8 @@ namespace RFI.TimeTracker.ViewModels
 
         private void SaveChanges()
         {
-            _timesheetService.SaveTimesheeets(_timesheets.ToList());
+            var timesheetsModel = Mapper.Map<List<Model.Timesheet>>(_timesheets);
+            _timesheetService.SaveTimesheeets(timesheetsModel);
         }
     }
 }

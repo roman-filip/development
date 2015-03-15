@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Data;
 using RFI.TimeTracker.ViewModels;
 
 namespace RFI.TimeTracker.WindowsViews.Views

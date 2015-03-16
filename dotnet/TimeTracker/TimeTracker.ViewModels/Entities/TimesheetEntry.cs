@@ -16,8 +16,10 @@ namespace RFI.TimeTracker.ViewModels.Entities
             get { return _workStart; }
             set
             {
-                SetPropertyValue(ref _workStart, value);
-                OnPropertyChanged("WorkTime");
+                if (SetPropertyValue(ref _workStart, value))
+                {
+                    OnPropertyChanged("WorkTime");
+                }
             }
         }
 
@@ -26,8 +28,10 @@ namespace RFI.TimeTracker.ViewModels.Entities
             get { return _workEnd; }
             set
             {
-                SetPropertyValue(ref _workEnd, value);
-                OnPropertyChanged("WorkTime");
+                if (SetPropertyValue(ref _workEnd, value))
+                {
+                    OnPropertyChanged("WorkTime");
+                }
             }
         }
 
@@ -36,8 +40,10 @@ namespace RFI.TimeTracker.ViewModels.Entities
             get { return _lunchBreakStart; }
             set
             {
-                SetPropertyValue(ref _lunchBreakStart, value);
-                OnPropertyChanged("WorkTime");
+                if (SetPropertyValue(ref _lunchBreakStart, value))
+                {
+                    OnPropertyChanged("WorkTime");
+                }
             }
         }
 
@@ -46,8 +52,10 @@ namespace RFI.TimeTracker.ViewModels.Entities
             get { return _lunchBreakEnd; }
             set
             {
-                SetPropertyValue(ref _lunchBreakEnd, value);
-                OnPropertyChanged("WorkTime");
+                if (SetPropertyValue(ref _lunchBreakEnd, value))
+                {
+                    OnPropertyChanged("WorkTime");
+                }
             }
         }
 

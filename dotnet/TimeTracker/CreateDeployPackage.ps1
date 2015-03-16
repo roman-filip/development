@@ -3,6 +3,12 @@
     & 'C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe' .\TimeTracker.sln /t:Rebuild /p:Configuration=Release
 }
 
+function DeleteBuildMess
+{
+    Remove-Item "$PSScriptRoot\bin\Release\AutoMapper.xml"
+    Remove-Item "$PSScriptRoot\bin\Release\*.pdb"
+}
+
 function CreateZipPackage
 {
     Add-Type -assembly "system.io.compression.filesystem"
@@ -24,4 +30,5 @@ function GetApplicationVersion
 }
 
 BuildApplication
+DeleteBuildMess
 CreateZipPackage

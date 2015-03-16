@@ -1,0 +1,10 @@
+﻿Release notes:
+==============
+
+v. 0.1.0:
+---------
+- pridana nova funkcnost pro zobrazeni kolik by melo byt odpracovano hodin vzhledem k poctu vykazanych dni
+
+v. 0.0.1:
+---------
+- Pocatecni verze

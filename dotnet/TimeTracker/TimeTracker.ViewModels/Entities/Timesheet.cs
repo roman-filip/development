@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
 using RFI.TimeTracker.Models;
 
 namespace RFI.TimeTracker.ViewModels.Entities
 {
     public class Timesheet : BaseNotifyObject
     {
-        private ObservableCollection<TimesheetEntry> _timesheetEntries = new ObservableCollection<TimesheetEntry>();
+        private readonly ObservableCollection<TimesheetEntry> _timesheetEntries;
 
         public int Month { get; set; }
 
         public int Year { get; set; }
 
-        public ObservableCollection<TimesheetEntry> TimesheetEntries
-        {
-            get { return _timesheetEntries; }
-            set { _timesheetEntries = value; }
-        }
+        public ObservableCollection<TimesheetEntry> TimesheetEntries { get { return _timesheetEntries; } }
 
         public TimeSpan TotalWorkTime
         {
@@ -48,6 +47,46 @@ namespace RFI.TimeTracker.ViewModels.Entities
                 {
                     return string.Empty;
                 }
+            }
+        }
+
+        public Timesheet()
+        {
+            _timesheetEntries = new ObservableCollection<TimesheetEntry>();
+            _timesheetEntries.CollectionChanged += TimesheetEntriesOnCollectionChanged;
+        }
+
+        private void TimesheetEntriesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            Debug.WriteLine(sender + " " + args.Action);
+
+            switch (args.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (TimesheetEntry newTimesheetEntry in args.NewItems)
+                    {
+                        newTimesheetEntry.PropertyChanged += TimesheetEntryOnPropertyChanged;
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (TimesheetEntry removedTimesheetEntry in args.OldItems)
+                    {
+                        removedTimesheetEntry.PropertyChanged -= TimesheetEntryOnPropertyChanged;
+                    }
+                    break;
+            }
+
+            OnPropertyChanged("TimesheetEntries");
+            OnPropertyChanged("Overview");
+        }
+
+        private void TimesheetEntryOnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            Debug.WriteLine(sender + " " + args.PropertyName);
+
+            if (args.PropertyName == "WorkTime")
+            {
+                OnPropertyChanged("Overview");
             }
         }
     }

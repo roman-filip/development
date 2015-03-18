@@ -1,6 +1,10 @@
 ﻿Release notes:
 ==============
 
+v. 0.2.0:
+---------
+- pridana nova funkcnost pro zobrazeni poctu odpracovanych hodin k aktualnimu casu
+
 v. 0.1.0:
 ---------
 - pridana nova funkcnost pro zobrazeni kolik by melo byt odpracovano hodin vzhledem k poctu vykazanych dni

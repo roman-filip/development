@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 using AutoMapper;
 using RFI.TimeTracker.ViewModels.Entities;
@@ -13,9 +14,10 @@ namespace RFI.TimeTracker.ViewModels
 {
     public class MainViewModel : Model.BaseNotifyObject
     {
-        private ITimesheetService _timesheetService;
+        private readonly ITimesheetService _timesheetService;
         private ObservableCollection<Timesheet> _timesheets;
         private Timesheet _selectedTimesheet;
+        private Timer _actualDayWorkTimeTimer;
 
         #region Binded properties
 
@@ -44,6 +46,23 @@ namespace RFI.TimeTracker.ViewModels
         {
             get { return _selectedTimesheet; }
             set { SetPropertyValue(ref _selectedTimesheet, value); }
+        }
+
+        public string ActualDayWorkTime
+        {
+            get
+            {
+                const string emptyDayWorkTime = "00:00";
+                if (ExistActualTimesheetEntry())
+                {
+                    var workTime = GetActualTimesheetEntry().CalculateWorkTime(GetActualTime());
+                    return workTime.HasValue ? workTime.Value.ToString(@"hh\:mm") : emptyDayWorkTime;
+                }
+                else
+                {
+                    return emptyDayWorkTime;
+                }
+            }
         }
 
         #endregion
@@ -87,6 +106,8 @@ namespace RFI.TimeTracker.ViewModels
 
             SelectActualTimesheet();
             SaveChanges();
+
+            _actualDayWorkTimeTimer = new Timer(state => OnPropertyChanged("ActualDayWorkTime"), null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(30));
         }
 
         private void OnEndWork()
@@ -96,6 +117,8 @@ namespace RFI.TimeTracker.ViewModels
 
             SelectActualTimesheet();
             SaveChanges();
+
+            _actualDayWorkTimeTimer.Dispose();
         }
 
         private void OnStarLunchBreak()
@@ -119,8 +142,7 @@ namespace RFI.TimeTracker.ViewModels
         private TimesheetEntry GetActualTimesheetEntry()
         {
             var actualTime = GetActualTime();
-
-            var actualTimesheet = GetActualTimesheet(actualTime);
+            var actualTimesheet = GetActualTimesheet();
 
             var actualTimesheetEntry =
                 actualTimesheet.TimesheetEntries.FirstOrDefault(te =>
@@ -137,8 +159,10 @@ namespace RFI.TimeTracker.ViewModels
             return actualTimesheetEntry;
         }
 
-        private Timesheet GetActualTimesheet(DateTime actualTime)
+        private Timesheet GetActualTimesheet()
         {
+            var actualTime = GetActualTime();
+
             var actualTimesheet =
                 Timesheets.FirstOrDefault(timesheet => timesheet.Month == actualTime.Month && timesheet.Year == actualTime.Year);
             if (actualTimesheet == null)
@@ -152,6 +176,18 @@ namespace RFI.TimeTracker.ViewModels
             }
 
             return actualTimesheet;
+        }
+
+        private bool ExistActualTimesheetEntry()
+        {
+            var actualTime = GetActualTime();
+            var actualTimesheet = GetActualTimesheet();
+
+            return actualTimesheet.TimesheetEntries.Any(te =>
+                (te.WorkStart.HasValue && te.WorkStart.Value.Day == actualTime.Day)
+                || (te.WorkEnd.HasValue && te.WorkEnd.Value.Day == actualTime.Day)
+                || (te.LunchBreakStart.HasValue && te.LunchBreakStart.Value.Day == actualTime.Day)
+                || (te.LunchBreakEnd.HasValue && te.LunchBreakEnd.Value.Day == actualTime.Day));
         }
 
         private DateTime GetActualTime()

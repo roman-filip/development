@@ -69,10 +69,15 @@ namespace RFI.TimeTracker.ViewModels.Entities
         {
             get
             {
-                var workTime = WorkEnd - WorkStart;
-                var lunchBreakTime = LunchBreakEnd - LunchBreakStart;
-                return workTime - (lunchBreakTime ?? new TimeSpan());
+                return CalculateWorkTime(WorkEnd);
             }
+        }
+
+        public TimeSpan? CalculateWorkTime(DateTime? endTime)
+        {
+            var workTime = endTime - WorkStart;
+            var lunchBreakTime = LunchBreakEnd - LunchBreakStart;
+            return workTime - (lunchBreakTime ?? new TimeSpan());
         }
     }
 }

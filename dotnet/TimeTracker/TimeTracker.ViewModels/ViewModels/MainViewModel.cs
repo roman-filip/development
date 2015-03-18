@@ -118,7 +118,10 @@ namespace RFI.TimeTracker.ViewModels
             SelectActualTimesheet();
             SaveChanges();
 
-            _actualDayWorkTimeTimer.Dispose();
+            if (_actualDayWorkTimeTimer != null)
+            {
+                _actualDayWorkTimeTimer.Dispose();
+            }
         }
 
         private void OnStarLunchBreak()

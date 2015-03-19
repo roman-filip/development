@@ -35,7 +35,7 @@ function SetVerboseOutput
 
 function LogInputParameters
 {
-    LogStartingFunction("LogInputParameters")
+    LogStartingFunction "LogInputParameters"
 
     Write-Host "Input parameters:"
     Write-Host "================="
@@ -49,8 +49,8 @@ function LogInputParameters
 
 function PrepareOutputDir
 {
-    LogStartingFunction("PrepareOutputDir")
-    
+    LogStartingFunction "PrepareOutputDir"
+
     if (Test-Path -Path $outputDir -Verbose:$useVerboseOutput)
     {
         Remove-Item -Path $outputDir -Recurse -Force -Verbose:$useVerboseOutput
@@ -61,14 +61,14 @@ function PrepareOutputDir
 
 function PrepareHtml
 {
-    LogStartingFunction("PrepareHtml")
+    LogStartingFunction "PrepareHtml"
 
     Copy-Item -Path "$gitRepoDir\web\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
 }
 
 function GenerateVersionFile
 {
-    LogStartingFunction("GenerateVersionFile")
+    LogStartingFunction "GenerateVersionFile"
     Write-Verbose "Generating version file: $versionFile"
 
     $gitBranch = git -C $gitRepoDir rev-parse --abbrev-ref HEAD
@@ -94,14 +94,14 @@ function GenerateVersionFile
 
 function CleanWebServer
 {
-    LogStartingFunction("CleanWebServer")
+    LogStartingFunction "CleanWebServer"
 
     Remove-Item -Path "$TargetDir\*" -Recurse -Force -Verbose:$useVerboseOutput
 }
 
 function DeployToWebServer
 {
-    LogStartingFunction("DeployToWebServer")
+    LogStartingFunction "DeployToWebServer"
     Write-Verbose "Deploying Bernardyn HTML to $TargetDir"
 
     Copy-Item -Path "$outputDir\*" -Destination $TargetDir -Recurse -Verbose:$useVerboseOutput
@@ -119,6 +119,6 @@ DeployToWebServer
 Write-Output "DONE"
 
 
-#TODO
-#pridat soubor s prefixem verze do repozitare
-#$deployBackupDir = "TODO"  # historie balicku co se nasazovaly
+# TODO
+#   pridat soubor s prefixem verze do repozitare
+#   $deployBackupDir = "TODO"  # historie balicku co se nasazovaly

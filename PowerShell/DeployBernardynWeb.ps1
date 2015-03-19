@@ -4,18 +4,17 @@ PARAM
     [Parameter(Mandatory=$true)]
     [string]$BaseDir,
     [Parameter(Mandatory=$true)]
-    [string]$TargetDir,
-    [Parameter(Mandatory=$false)]
-    [string]$JobName,
-    [Parameter(Mandatory=$false)]
-    [string]$BuildNr,
-    [Parameter(Mandatory=$false)]
-    [string]$StartedBy
+    [string]$TargetDir
 )
 
 $gitRepoDir = "$BaseDir\repos"
 $outputDir = "$BaseDir\output"
 $versionFile = "$outputDir\version.txt"
+
+$jobName = $env:JOB_NAME
+$buildNr = $env:BUILD_NUMBER
+$startedBy = $env:BUILD_USER
+$gitBranch = $env:GIT_BRANCH
 
 $useVerboseOutput = $false
 
@@ -39,12 +38,8 @@ function LogInputParameters
 
     Write-Host "Input parameters:"
     Write-Host "================="
-
     Write-Host "  BaseDir:   $BaseDir"
     Write-Host "  TargetDir: $TargetDir"
-    Write-Host "  JobName:   $JobName"
-    Write-Host "  BuildNr:   $BuildNr"
-    Write-Host "  StartedBy: $StartedBy"
 }
 
 function PrepareOutputDir
@@ -71,19 +66,19 @@ function GenerateVersionFile
     LogStartingFunction "GenerateVersionFile"
     Write-Verbose "Generating version file: $versionFile"
 
-    $gitBranch = git -C $gitRepoDir rev-parse --abbrev-ref HEAD
     $gitLongVersion = git -C $gitRepoDir rev-parse HEAD
     $gitShortVersion = git -C $gitRepoDir rev-parse --short HEAD
 
     $versionInfo = 
-        "Jenkins: `r`n" +
-        "  build number: $BuildNr `r`n" +
-        "  build started by: $StartedBy `r`n" +
-        "  build date: " + (Get-Date).ToString() + "`r`n`r`n" +
-        "Git: `r`n" +
-        "  branch: $gitBranch `r`n" +
-        "  short version: $gitShortVersion `r`n" +
-        "  long version:  $gitLongVersion `r`n"
+        "Jenkins: `n" +
+        "  job name: $jobName `n" +
+        "  build number: $buildNr `n" +
+        "  build started by: $startedBy `n" +
+        "  build date: " + (Get-Date).ToString() + "`n`n" +
+        "Git: `n" +
+        "  branch: $gitBranch `n" +
+        "  short version: $gitShortVersion `n" +
+        "  long version:  $gitLongVersion `n"
 
     Write-Verbose "Version info:"
     Write-Verbose "============="
@@ -108,6 +103,8 @@ function DeployToWebServer
 }
 
 
+Write-Output "Executing script $($MyInvocation.InvocationName) ..."
+
 SetVerboseOutput
 LogInputParameters
 PrepareOutputDir
@@ -116,7 +113,7 @@ GenerateVersionFile
 CleanWebServer
 DeployToWebServer
 
-Write-Output "DONE"
+Write-Output "Script $($MyInvocation.InvocationName) finished"
 
 
 # TODO

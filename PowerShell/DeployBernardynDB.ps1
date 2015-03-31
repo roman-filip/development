@@ -23,6 +23,9 @@ PARAM
 $gitRepoDir = "$BaseDir\repos"
 $outputDir = "$BaseDir\output"
 
+$genesisDir = "$outputDir\genesis"
+$genesisFile = "$genesisDir\#_BASIC_STRUCTURE_Bernardyn.SQL"
+
 $dbViewsDir = "$outputDir\views"
 $dbViewsDeployFile = "$dbViewsDir\_deploy_views.sql"
 
@@ -33,7 +36,6 @@ $dbProceduresDir = "$outputDir\procedury"
 $dbProceduresDeployFile = "$dbProceduresDir\_deploy_procedures.sql"
 
 $versionFile = "$outputDir\version.txt"
-$genesisFile = "$outputDir\genesis\#_BASIC_STRUCTURE_Bernardyn.SQL"
 
 $sqlCmd = "sqlcmd"
 $sqlCmdCommonParams = "-S 192.168.0.43,1433 -d $DBName "
@@ -80,8 +82,10 @@ function PrepareOutputDir
     }
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
-
     Copy-Item -Path "$gitRepoDir\DB $CountryCode\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
+    
+    New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
+    Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
 }
 
 function DeployGenesisScript
@@ -189,6 +193,8 @@ DeployProcedures
 
 Write-Output "DONE"
 
+
+#smazat TargetDir ze vstupnich parametru
 
 # TODO:
     # - v SK skriptech neni genesis a je tam o 10 souboru mene je to OK

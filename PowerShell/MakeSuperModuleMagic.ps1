@@ -21,7 +21,7 @@ $commonCsProjPath = "$commonDir\Common.csproj"
 $vb6Dir = "$workingDir\$Branch\vb"
 $supermodulDir = "$vb6Dir\HCF_SuperModul"
 $supermodulVbProjPath = "$supermodulDir\HCF_SuperModul.vbp"
-$oldSuperModuleName = "HCF_SuperModul_\d{3}"
+$oldSuperModuleName = "HCF_SuperModul_\d+"
 $newSuperModuleName = "HCF_SuperModul_$Release"
 
 $vb6compiler = "c:\Program Files\Microsoft Visual Studio\VB98\vb6.exe"
@@ -93,7 +93,7 @@ PrepareSuperModulProjForBuild
 BuildSuperModul
 SetSuperModulProjAfterBuild
 
-$dllFiles = @(Get-ChildItem -Path $supermodulDir -Filter *.dll) | Sort-Object
+$dllFiles = @(Get-ChildItem -Path $supermodulDir -Filter *.dll) | Sort-Object -Property LastWriteTime
 if ($dllFiles.Length -gt 1)
 {
     svn del $dllFiles[0].FullName

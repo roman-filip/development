@@ -1,21 +1,17 @@
 ﻿$sourceSVNs = 
     @(
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp25_d1/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp25_d2/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp25_d3/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp25_d4/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs10_sp31_d1/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs10_sp31_d2/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs10_sp31_d3/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs10_sp31_d4/",
 
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp26_d1/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp26_d2/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp26_d3/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_sp26_d4/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp32_d1/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp32_d2/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp32_d3/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp32_d4/",
 
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs06",
-
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs07",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs07_fix",
-
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs08")
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs09_fix")
 
 $targetSVN = "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/trunk"
 

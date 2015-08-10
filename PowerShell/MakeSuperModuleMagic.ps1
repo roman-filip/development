@@ -3,22 +3,22 @@
     [Parameter(Mandatory=$true)]
     [string]$Branch,
     [Parameter(Mandatory=$true)]
-    [string]$Release
+    [string]$Release,
+    [Parameter(Mandatory=$true)]
+    [string]$WorkingDir
 )
 
-$newGuid = 'RFI-TEST'
-$workingDir = 'C:\TestRFI'
+$newGuid
 
 $dotnetSVNBranch = "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/$Branch"
 $vb6SVNBranch = "https://subversion.homecredit.net/repos/vb/cs/$Branch"
 
 $svnCommitMsg = "New SuperModul"
 
-$dotnetDir = "$workingDir\$Branch\dotnet"
+$dotnetDir = "$WorkingDir\$Branch\dotnet"
 $commonDir = "$dotnetDir\Common"
-$commonCsProjPath = "$commonDir\Common.csproj"
 
-$vb6Dir = "$workingDir\$Branch\vb"
+$vb6Dir = "$WorkingDir\$Branch\vb"
 $supermodulDir = "$vb6Dir\HCF_SuperModul"
 $supermodulVbProjPath = "$supermodulDir\HCF_SuperModul.vbp"
 $oldSuperModuleName = "HCF_SuperModul_\d+"
@@ -42,7 +42,11 @@ function PrepareSuperModulProjForBuild
 
 function BuildSuperModul
 {
+    Write-Output "Building SuperModul ..."
+    
     Start-Process $vb6compiler -ArgumentList $vb6compilerParameters -Wait
+    
+    Write-Output "SuperModul compiled"
 }
 
 function SetSuperModulProjAfterBuild
@@ -56,8 +60,44 @@ function SetSuperModulProjAfterBuild
     Set-Content -Value $supermodulVbProjContent -Path $supermodulVbProjPath
 }
 
-function AdjustDotNetCommon
+function MakeVB6Magic
 {
+    Write-Output "************** Begining with VB6 magic **************"
+    
+    svn checkout $vb6SVNBranch $vb6Dir
+    svn lock $supermodulVbProjPath
+    svn lock "$supermodulDir\*.dll"
+    
+    PrepareSuperModulProjForBuild
+    BuildSuperModul
+    SetSuperModulProjAfterBuild
+    
+    $dllFiles = @(Get-ChildItem -Path $supermodulDir -Filter *.dll) | Sort-Object -Property LastWriteTime
+    if ($dllFiles.Length -gt 1)
+    {
+        svn del $dllFiles[0].FullName
+    
+        svn add $dllFiles[1].FullName
+        svn propset svn:needs-lock on $dllFiles[1].FullName
+    }
+    
+    svn commit $supermodulDir -m $svnCommitMsg
+    
+    Write-Output "************** VB6 magic finished **************"
+}
+
+function GetSuperModulGuid
+{
+    $superModuleDll = Get-ChildItem -Path $supermodulDir -Filter *.dll
+
+    $guid = .\GetGUID.exe $superModuleDll.FullName
+    return $guid
+}
+
+function AdjustDotNetCommonCsproj
+{
+    $commonCsProjPath = "$commonDir\Common.csproj"
+
     $commonCsProjContent = (Get-Content $commonCsProjPath)
     $commonCsProjContent = $commonCsProjContent -replace $oldSuperModuleName, $newSuperModuleName
     
@@ -68,50 +108,48 @@ function AdjustDotNetCommon
         {
             if ($comRef -ne $null -and $comRef.Include -eq $newSuperModuleName)
             {
-                $comRef.Guid = $newGuid;
+                $comRef.Guid = [string]$newGuid;
                 $commonCsProjContentXML.Save($commonCsProjPath);
                 break;
             }
         }
     }
-    
-    #TODO - commit
-    #svn commit $commonDir -m $svnCommitMsg
 }
 
-
-Write-Output "***************** Start SuperModul magic for $Branch *****************"
-
-
-#svn checkout $dotnetSVNBranch $dotnetDir
-
-svn checkout $vb6SVNBranch $vb6Dir
-svn lock $supermodulVbProjPath
-svn lock "$supermodulDir\*.dll"
-
-PrepareSuperModulProjForBuild
-BuildSuperModul
-SetSuperModulProjAfterBuild
-
-$dllFiles = @(Get-ChildItem -Path $supermodulDir -Filter *.dll) | Sort-Object -Property LastWriteTime
-if ($dllFiles.Length -gt 1)
+function AdjustNetInterfaceFile
 {
-    svn del $dllFiles[0].FullName
-
-    svn add $dllFiles[1].FullName
-    svn propset svn:needs-lock on $dllFiles[1].FullName
+    $netInterfacePath = "$commonDir\ExternalModules\NetInterfaceCZ.cs"
+    
+    $netInterfaceContent = (Get-Content $netInterfacePath)
+    $netInterfaceContent = $netInterfaceContent -replace $oldSuperModuleName, $newSuperModuleName
+    Set-Content $netInterfacePath $netInterfaceContent
 }
 
-svn commit $supermodulDir -m $svnCommitMsg
+function MakeDotNetMagic
+{
+    Write-Output "************** Begining with .NET magic **************"
+    
+    svn checkout "$dotnetSVNBranch/Common" $commonDir
+    
+    $newGuid = GetSuperModulGuid
+    
+    AdjustDotNetCommonCsproj
+    
+    AdjustNetInterfaceFile
+    
+    svn commit $commonDir -m $svnCommitMsg
+    
+    Write-Output "************** .NET magic finished **************"
+}
 
 
-Write-Output "***************** Done SuperModul magic for $Branch ******************"
+Write-Output "************** Begining with SuperModul magic for $Branch **************"
 
+MakeVB6Magic
 
-#AdjustDotNetCommon
+MakeDotNetMagic
 
-
-#build SM jobem
+Write-Output "************** SuperModul magic for $Branch finished ***************"
 
 
 # TODO: error handling

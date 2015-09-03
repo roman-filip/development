@@ -30,7 +30,8 @@ function UnzipSuperModule
 function CopySuperModule
 {
     $superModulePath = $vb6ModulesDir + "CS$releaseNumber\$branchName\HOMER.VB6\HCF_SuperModul_*.dll"
-    Copy-Item -Path $superModulePath -Destination $localSuperModuleDir
+    New-Item -ItemType Directory -Path $localSuperModuleDir
+    Copy-Item -Path $superModulePath -Destination "$localSuperModuleDir\"
 }
 
 function InstallSuperModule

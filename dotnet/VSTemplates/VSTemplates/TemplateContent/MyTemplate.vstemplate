@@ -1,0 +1,16 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+  <TemplateData>
+    <DefaultName>WPFViewViewModel</DefaultName>
+    <Name>HCI WPF View &amp; ViewModel</Name>
+    <Description>Creates WPF view and viewmodel and binds them together</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>10</SortOrder>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <References />
+    <ProjectItem SubType="Designer" TargetFileName="$fileinputname$\$fileinputname$View.xaml" ReplaceParameters="true">View.xaml</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$\$fileinputname$View.xaml.cs" ReplaceParameters="true">View.xaml.cs</ProjectItem>
+    <ProjectItem SubType="Code" TargetFileName="$fileinputname$\$fileinputname$ViewModel.cs" ReplaceParameters="true">ViewModel.cs</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

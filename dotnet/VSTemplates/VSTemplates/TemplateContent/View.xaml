@@ -1,0 +1,31 @@
+﻿<mvvm:BaseView
+             xmlns:mvvm="clr-namespace:Net.Homecredit.Infrastructure.Module.WPF.MVVM;assembly=Infrastructure.Module"
+             x:TypeArguments="vm:$fileinputname$ViewModel"
+             x:Class="$rootnamespace$.$fileinputname$.$fileinputname$View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hci="clr-namespace:HCILibrary.WPF.Controls;assembly=HCILibrary"
+             xmlns:vm="clr-namespace:$rootnamespace$.$fileinputname$"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=vm:$fileinputname$ViewModel, IsDesignTimeCreatable=True}"
+             Height="600" Width="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/HCILibrary;component/Themes/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+    </Grid>
+</mvvm:BaseView>

@@ -1,14 +1,14 @@
 ﻿$sourceSVNs = 
     @(
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp33_d1/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp33_d2/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp33_d3/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs11_sp33_d4/",
-
       "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp34_d1/",
       "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp34_d2/",
       "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp34_d3/",
-      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp34_d4/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp34_d5/",
+
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp35_d1/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp35_d2/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp35_d3/",
+      "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs12_sp35_d4/",
 
       "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/cs10",
 

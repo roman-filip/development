@@ -1,0 +1,24 @@
+﻿<Window x:Class="PhotoGadget.Views.PhotoGadgetView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:props="clr-namespace:PhotoGadget.Properties"
+        xmlns:local="clr-namespace:PhotoGadget.Views"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        MouseDown="Window_MouseDown"
+        Height="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Height, Mode=OneWay}"
+        Width="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Width, Mode=OneWay}">
+    <Window.DataContext>
+        <local:PhotoGadgetViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Image Source="{Binding ImagePath}" />
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button Content=" &lt; " Command="{Binding ShowPreviousImageCommand}" Margin="5" />
+            <Button Content=" &gt; " Command="{Binding ShowNextImageCommand}" Margin="5" />
+        </StackPanel>
+    </Grid>
+</Window>

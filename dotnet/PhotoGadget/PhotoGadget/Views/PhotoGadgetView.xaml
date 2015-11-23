@@ -3,22 +3,53 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:props="clr-namespace:PhotoGadget.Properties"
         xmlns:local="clr-namespace:PhotoGadget.Views"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         WindowStyle="None"
-        MouseDown="Window_MouseDown"
+        Left="{Binding Source={x:Static props:Settings.Default}, Path=WindowLocation.X, Mode=OneWay}"
+        Top="{Binding Source={x:Static props:Settings.Default}, Path=WindowLocation.Y, Mode=OneWay}"
         Height="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Height, Mode=OneWay}"
-        Width="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Width, Mode=OneWay}">
+        Width="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Width, Mode=OneWay}"
+        MouseDown="Window_MouseDown">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <command:EventToCommand Command="{Binding ShowImageInViewerCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Resources\GlassButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Button" BasedOn="{StaticResource GlassButton}">
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="FontSize" Value="20" />
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Window.DataContext>
         <local:PhotoGadgetViewModel />
     </Window.DataContext>
 
-    <Grid>
+    <Grid ToolTipService.ShowDuration="600000" ToolTipService.InitialShowDelay="1000">
+        <Grid.ToolTip>
+            <ToolTip>
+                <Image Source="{Binding ImagePath}" />
+            </ToolTip>
+        </Grid.ToolTip>
         <Image Source="{Binding ImagePath}" />
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button Content=" &lt; " Command="{Binding ShowPreviousImageCommand}" Margin="5" />
-            <Button Content=" &gt; " Command="{Binding ShowNextImageCommand}" Margin="5" />
+            <Button Content="&lt;" Command="{Binding ShowPreviousImageCommand}" />
+            <Button Content="&gt;" Command="{Binding ShowNextImageCommand}" />
         </StackPanel>
     </Grid>
 </Window>

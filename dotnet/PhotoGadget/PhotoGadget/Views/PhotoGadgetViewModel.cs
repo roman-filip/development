@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Threading;
@@ -24,26 +25,39 @@ namespace PhotoGadget.Views
         public string ImagePath
         {
             get { return _imagePath; }
-            set { Set(ref _imagePath, value); }
+            set
+            {
+                Set(ref _imagePath, value);
+                ShowImageInViewerCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public RelayCommand ShowNextImageCommand { get; private set; }
 
         public RelayCommand ShowPreviousImageCommand { get; private set; }
 
+        public RelayCommand ShowImageInViewerCommand { get; private set; }
+
         public PhotoGadgetViewModel()
         {
-            ShowNextImageCommand = new RelayCommand(OnShowNextImage);
-            ShowPreviousImageCommand = new RelayCommand(OnShowPreviousImage, () => _displayedIndexes.Count > 0);
-
+            InitializeCommandes();
             LoadImages();
             OnShowNextImage();
             InitTimer();
         }
 
+        private void InitializeCommandes()
+        {
+            ShowNextImageCommand = new RelayCommand(OnShowNextImage);
+            ShowPreviousImageCommand = new RelayCommand(OnShowPreviousImage, () => _displayedIndexes.Count > 0);
+            ShowImageInViewerCommand = new RelayCommand(OnShowImageInViewer, () => !string.IsNullOrEmpty(ImagePath));
+        }
+
         private void LoadImages()
         {
             var imagesPath = Settings.Default.ImagesPath;
+            //imagesPath = @"c:\Temp\Fotky - Golf 20150607\";
+
             _images =
                 Directory.EnumerateFiles(imagesPath, "*.*", SearchOption.AllDirectories)
                 .Where(s => s.EndsWith(".jpg") || s.EndsWith(".jpeg") || s.EndsWith(".gif") || s.EndsWith(".bmp") || s.EndsWith(".png"))
@@ -74,6 +88,11 @@ namespace PhotoGadget.Views
             ImagePath = _images[imageIndex];
 
             ShowPreviousImageCommand.RaiseCanExecuteChanged();
+        }
+
+        private void OnShowImageInViewer()
+        {
+            Process.Start(ImagePath);
         }
     }
 }

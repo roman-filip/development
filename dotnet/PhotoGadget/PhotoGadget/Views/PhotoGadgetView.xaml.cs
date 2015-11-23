@@ -17,7 +17,13 @@ namespace PhotoGadget.Views
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                DragMove();
+                try
+                {
+                    DragMove();
+                }
+                catch
+                {
+                }
             }
         }
     }

@@ -1,0 +1,1 @@
+powershell c:\Hudson_Support\script\DotNETLibraryFreeze\DotNETLibraryFreeze.ps1 -Branch %1 -WorkingDir %2

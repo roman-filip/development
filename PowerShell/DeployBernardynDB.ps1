@@ -2,14 +2,15 @@
 PARAM
 (
     [Parameter(Mandatory=$true)]
+    [ValidateSet("192.168.0.43,1433", "192.168.0.41")]
+    [string]$DBServer,
+    [Parameter(Mandatory=$true)]
     [string]$DBName,
     [Parameter(Mandatory=$true)]
     [ValidateSet("CZ", "SK")]
     [string]$CountryCode,
     [Parameter(Mandatory=$true)]
     [string]$BaseDir,
-    [Parameter(Mandatory=$true)]
-    [string]$TargetDir,
     [Parameter(Mandatory=$false)]
     [string]$JobName,
     [Parameter(Mandatory=$false)]
@@ -38,7 +39,7 @@ $dbProceduresDeployFile = "$dbProceduresDir\_deploy_procedures.sql"
 $versionFile = "$outputDir\version.txt"
 
 $sqlCmd = "sqlcmd"
-$sqlCmdCommonParams = "-S 192.168.0.43,1433 -d $DBName "
+$sqlCmdCommonParams = "-S $DBServer -d $DBName "
 
 $useVerboseOutput = $false
 
@@ -63,10 +64,10 @@ function LogInputParameters
     Write-Host "Input parameters:"
     Write-Host "================="
 
+    Write-Host "  DBServer:    $DBServer"
     Write-Host "  DBName:      $DBName"
     Write-Host "  CountryCode: $CountryCode"
     Write-Host "  BaseDir:     $BaseDir"
-    Write-Host "  TargetDir:   $TargetDir"
     Write-Host "  JobName:     $JobName"
     Write-Host "  BuildNr:     $BuildNr"
     Write-Host "  StartedBy:   $StartedBy"
@@ -75,7 +76,7 @@ function LogInputParameters
 function PrepareOutputDir
 {
     LogStartingFunction "PrepareOutputDir"
-    
+
     if (Test-Path -Path $outputDir -Verbose:$useVerboseOutput)
     {
         Remove-Item -Path $outputDir -Recurse -Force -Verbose:$useVerboseOutput
@@ -83,49 +84,61 @@ function PrepareOutputDir
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
     Copy-Item -Path "$gitRepoDir\DB $CountryCode\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
-    
-    New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
-    Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
+
+    #New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
+    #Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
 }
 
 function DeployGenesisScript
 {
-    LogStartingFunction "DeployGenesisScript"
+    #LogStartingFunction "DeployGenesisScript"
 
-    DeploySQLScript $genesisFile
+    #DeploySQLScript $genesisFile
 }
 
 function DeployViews
 {
     LogStartingFunction "DeployViews"
-    Write-Verbose "Deploying views from $dbViewsDir"
 
-    $views = Get-ChildItem $dbViewsDir -Recurse
-    GenerateDeployScript $dbViewsDeployFile $views
+    if (Test-Path -Path $dbViewsDir -Verbose:$useVerboseOutput)
+    {
+        Write-Verbose "Deploying views from $dbViewsDir"
 
-    DeploySQLScript $dbViewsDeployFile
+        $views = Get-ChildItem $dbViewsDir -Recurse
+        GenerateDeployScript $dbViewsDeployFile $views
+
+        DeploySQLScript $dbViewsDeployFile
+    }
 }
 
 function DeployFunctions
 {
     LogStartingFunction "DeployFunctions"
-    Write-Verbose "Deploying functions from $dbFunctionsDir"
 
-    $functions = Get-ChildItem $dbFunctionsDir -Recurse
-    GenerateDeployScript $dbFunctionsDeployFile $functions
+    if (Test-Path -Path $dbFunctionsDir -Verbose:$useVerboseOutput)
+    {
+        Write-Verbose "Deploying functions from $dbFunctionsDir"
 
-    DeploySQLScript $dbFunctionsDeployFile
+        $functions = Get-ChildItem $dbFunctionsDir -Recurse
+        GenerateDeployScript $dbFunctionsDeployFile $functions
+
+        DeploySQLScript $dbFunctionsDeployFile
+    }
 }
 
 function DeployProcedures
 {
     LogStartingFunction "DeployProcedures"
-    Write-Verbose "Deploying procedures from $dbProceduresDir"
 
-    $procedures = Get-ChildItem $dbProceduresDir -Recurse
-    GenerateDeployScript $dbProceduresDeployFile $procedures
+    if (Test-Path -Path $dbProceduresDir -Verbose:$useVerboseOutput)
+    {
+        Write-Verbose "Deploying procedures from $dbProceduresDir"
 
-    DeploySQLScript($dbProceduresDeployFile)
+        $procedures = Get-ChildItem $dbProceduresDir -Recurse
+        GenerateDeployScript $dbProceduresDeployFile $procedures
+
+        DeploySQLScript($dbProceduresDeployFile)
+    }
 }
 
 function GenerateDeployScript($deployFile, $files)
@@ -135,7 +148,8 @@ function GenerateDeployScript($deployFile, $files)
     foreach ($file in $files)
     {
         Write-Verbose "  Adding script $($file.FullName)"
-        Add-Content $deployFile ":r $($file.FullName)"
+        Add-Content $deployFile ":r ""$($file.FullName)"""
+        Add-Content $deployFile "GO"
     }
 }
 
@@ -145,7 +159,7 @@ function DeploySQLScript($file)
 
     Write-Verbose "Starting sqlcmd.exe $params"
 
-#    Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
+    Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
 }
 
 # TODO - makes this function sense?
@@ -176,14 +190,12 @@ function GenerateVersionFile
 }
 
 
-# TODO - remove cls
-cls
-
 SetVerboseOutput
 LogInputParameters
 PrepareOutputDir
 
-DeployGenesisScript
+#DeployGenesisScript
+
 DeployViews
 DeployFunctions
 DeployProcedures
@@ -198,9 +210,9 @@ Write-Output "DONE"
 
 # TODO:
     # - v SK skriptech neni genesis a je tam o 10 souboru mene je to OK
-    # proc je ve ve view USE [BERNARDYN_SK] - a navic v CZ adresari
     # nekde je zase USE [BERNARDYN
     # u vsech objektu by melo byt create or replace
+    # po deploy zjistit seznam nevalidnich objektu a pripadne je prekompilovat
 
 # Call s Kugelem
     # pro testy si odmazat USE, ale v budoucnu uz tam nebude

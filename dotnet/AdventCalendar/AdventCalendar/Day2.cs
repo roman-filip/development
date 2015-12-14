@@ -38,7 +38,7 @@ namespace AdventCalendar
             return ProcessPresents(input, CalculateRibbonLength);
         }
 
-        private int ProcessPresents(string input, Func<int, int, int, int, int, int> computaionFunc)
+        private int ProcessPresents(string input, Func<int, int, int, int, int, int> computationFunc)
         {
             var result = 0;
             var presents = input.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -62,7 +62,7 @@ namespace AdventCalendar
                     min2 = Math.Min(width, depth);
                 }
 
-                result += computaionFunc(width, height, depth, min1, min2);
+                result += computationFunc(width, height, depth, min1, min2);
             }
 
             return result;

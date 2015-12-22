@@ -49,7 +49,17 @@
     <Compile Include="Day4.cs" />
     <Compile Include="Day5.cs" />
     <Compile Include="Day6.cs" />
-    <Compile Include="Day7.cs" />
+    <Compile Include="Day7\AndGate.cs" />
+    <Compile Include="Day7\BinaryGate.cs" />
+    <Compile Include="Day7\Day7.cs" />
+    <Compile Include="Day7\ICircuitElement.cs" />
+    <Compile Include="Day7\LeftShiftGate.cs" />
+    <Compile Include="Day7\NotGate.cs" />
+    <Compile Include="Day7\OrGate.cs" />
+    <Compile Include="Day7\RightShiftGate.cs" />
+    <Compile Include="Day7\ShiftGate.cs" />
+    <Compile Include="Day7\Signal.cs" />
+    <Compile Include="Day7\Wire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

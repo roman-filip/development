@@ -2,7 +2,7 @@
 PARAM
 (
     [Parameter(Mandatory=$true)]
-    [ValidateSet("192.168.0.43,1433", "192.168.0.41")]
+    [ValidateSet("192.168.0.43,1433", "192.168.0.41,1433")]
     [string]$DBServer,
     [Parameter(Mandatory=$true)]
     [string]$DBName,
@@ -27,7 +27,7 @@ $outputDir = "$BaseDir\output"
 $genesisDir = "$outputDir\genesis"
 $genesisFile = "$genesisDir\#_BASIC_STRUCTURE_Bernardyn.SQL"
 
-$dbViewsDir = "$outputDir\views"
+$dbViewsDir = "$outputDir\pohledy"
 $dbViewsDeployFile = "$dbViewsDir\_deploy_views.sql"
 
 $dbFunctionsDir = "$outputDir\funkce"
@@ -42,6 +42,8 @@ $sqlCmd = "sqlcmd"
 $sqlCmdCommonParams = "-S $DBServer -d $DBName "
 
 $useVerboseOutput = $false
+
+$ignoredCountryCode = "XX"
 
 
 function LogStartingFunction($functionName)
@@ -73,6 +75,16 @@ function LogInputParameters
     Write-Host "  StartedBy:   $StartedBy"
 }
 
+function SetIgnoredCountry
+{
+    switch ($CountryCode)
+    {
+        "CZ" { $global:ignoredCountryCode = "SK"; break; }
+        "SK" { $global:ignoredCountryCode = "CZ"; break; }
+        default { throw "Unsupported country code $CountryCode"; break; }
+    }
+}
+
 function PrepareOutputDir
 {
     LogStartingFunction "PrepareOutputDir"
@@ -83,7 +95,8 @@ function PrepareOutputDir
     }
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
-    Copy-Item -Path "$gitRepoDir\DB $CountryCode\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
+    Copy-Item -Path "$gitRepoDir\DB\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
+    Get-ChildItem -Path $outputDir -Filter $ignoredCountryCode -Directory -Recurse | Remove-Item -Recurse
 
     #New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
     #Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
@@ -104,7 +117,7 @@ function DeployViews
     {
         Write-Verbose "Deploying views from $dbViewsDir"
 
-        $views = Get-ChildItem $dbViewsDir -Recurse
+        $views = Get-ChildItem $dbViewsDir -Recurse -File
         GenerateDeployScript $dbViewsDeployFile $views
 
         DeploySQLScript $dbViewsDeployFile
@@ -119,7 +132,7 @@ function DeployFunctions
     {
         Write-Verbose "Deploying functions from $dbFunctionsDir"
 
-        $functions = Get-ChildItem $dbFunctionsDir -Recurse
+        $functions = Get-ChildItem $dbFunctionsDir -Recurse -File
         GenerateDeployScript $dbFunctionsDeployFile $functions
 
         DeploySQLScript $dbFunctionsDeployFile
@@ -134,7 +147,7 @@ function DeployProcedures
     {
         Write-Verbose "Deploying procedures from $dbProceduresDir"
 
-        $procedures = Get-ChildItem $dbProceduresDir -Recurse
+        $procedures = Get-ChildItem $dbProceduresDir -Recurse -File
         GenerateDeployScript $dbProceduresDeployFile $procedures
 
         DeploySQLScript($dbProceduresDeployFile)
@@ -159,7 +172,7 @@ function DeploySQLScript($file)
 
     Write-Verbose "Starting sqlcmd.exe $params"
 
-    Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
+    #Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
 }
 
 # TODO - makes this function sense?
@@ -192,6 +205,7 @@ function GenerateVersionFile
 
 SetVerboseOutput
 LogInputParameters
+SetIgnoredCountry
 PrepareOutputDir
 
 #DeployGenesisScript

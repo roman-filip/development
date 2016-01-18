@@ -172,7 +172,7 @@ function DeploySQLScript($file)
 
     Write-Verbose "Starting sqlcmd.exe $params"
 
-    #Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
+    Start-Process $sqlCmd -ArgumentList $params -Wait -NoNewWindow
 }
 
 # TODO - makes this function sense?

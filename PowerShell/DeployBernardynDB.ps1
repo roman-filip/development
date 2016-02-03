@@ -96,7 +96,7 @@ function PrepareOutputDir
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
     Copy-Item -Path "$gitRepoDir\DB\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
-    Get-ChildItem -Path $outputDir -Filter $ignoredCountryCode -Directory -Recurse | Remove-Item -Recurse
+    Get-ChildItem -Path $outputDir -Filter $ignoredCountryCode -Recurse | ?{ $_.PSIsContainer } | Remove-Item -Recurse
 
     #New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
     #Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
@@ -117,7 +117,7 @@ function DeployViews
     {
         Write-Verbose "Deploying views from $dbViewsDir"
 
-        $views = Get-ChildItem $dbViewsDir -Recurse -File
+        $views = Get-ChildItem $dbViewsDir -Recurse | ?{ ! $_.PSIsContainer }
         GenerateDeployScript $dbViewsDeployFile $views
 
         DeploySQLScript $dbViewsDeployFile
@@ -132,7 +132,7 @@ function DeployFunctions
     {
         Write-Verbose "Deploying functions from $dbFunctionsDir"
 
-        $functions = Get-ChildItem $dbFunctionsDir -Recurse -File
+        $functions = Get-ChildItem $dbFunctionsDir -Recurse | ?{ ! $_.PSIsContainer }
         GenerateDeployScript $dbFunctionsDeployFile $functions
 
         DeploySQLScript $dbFunctionsDeployFile
@@ -147,7 +147,7 @@ function DeployProcedures
     {
         Write-Verbose "Deploying procedures from $dbProceduresDir"
 
-        $procedures = Get-ChildItem $dbProceduresDir -Recurse -File
+        $procedures = Get-ChildItem $dbProceduresDir -Recurse | ?{ ! $_.PSIsContainer }
         GenerateDeployScript $dbProceduresDeployFile $procedures
 
         DeploySQLScript($dbProceduresDeployFile)

@@ -96,7 +96,7 @@ function PrepareOutputDir
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
     Copy-Item -Path "$gitRepoDir\DB\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
-    Get-ChildItem -Path $outputDir -Filter $ignoredCountryCode -Recurse | ?{ $_.PSIsContainer } | Remove-Item -Recurse
+    Get-ChildItem -Path $outputDir -Filter $global:ignoredCountryCode -Recurse | ?{ $_.PSIsContainer } | Remove-Item -Recurse
 
     #New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
     #Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput

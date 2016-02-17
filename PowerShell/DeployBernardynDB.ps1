@@ -12,6 +12,8 @@ PARAM
     [Parameter(Mandatory=$true)]
     [string]$BaseDir,
     [Parameter(Mandatory=$false)]
+    [string]$ReleaseName,
+    [Parameter(Mandatory=$false)]
     [string]$JobName,
     [Parameter(Mandatory=$false)]
     [string]$BuildNr,
@@ -35,6 +37,10 @@ $dbFunctionsDeployFile = "$dbFunctionsDir\_deploy_functions.sql"
 
 $dbProceduresDir = "$outputDir\procedury"
 $dbProceduresDeployFile = "$dbProceduresDir\_deploy_procedures.sql"
+
+$dbReleasesBaseDir = "$outputDir\releasy"
+$dbReleaseDir = "$dbReleasesBaseDir\$ReleaseName"
+$dbReleaseDeployFile = "$dbReleaseDir\_deploy_release.sql"
 
 $versionFile = "$outputDir\version.txt"
 
@@ -70,6 +76,7 @@ function LogInputParameters
     Write-Host "  DBName:      $DBName"
     Write-Host "  CountryCode: $CountryCode"
     Write-Host "  BaseDir:     $BaseDir"
+    Write-Host "  ReleaseName: $ReleaseName"
     Write-Host "  JobName:     $JobName"
     Write-Host "  BuildNr:     $BuildNr"
     Write-Host "  StartedBy:   $StartedBy"
@@ -96,7 +103,9 @@ function PrepareOutputDir
 
     New-Item -ItemType Directory -Path $outputDir -Verbose:$useVerboseOutput > $null
     Copy-Item -Path "$gitRepoDir\DB\*" -Destination $outputDir -Recurse -Verbose:$useVerboseOutput
-    Get-ChildItem -Path $outputDir -Filter $global:ignoredCountryCode -Recurse | ?{ $_.PSIsContainer } | Remove-Item -Recurse
+
+    Get-ChildItem -Path $outputDir -Filter $global:ignoredCountryCode -Recurse | ?{ $_.PSIsContainer } | Remove-Item -Recurse -Verbose:$useVerboseOutput
+    Get-ChildItem -Path $dbReleasesBaseDir | ?{ $_.PSIsContainer -and $_.BaseName -ne $ReleaseName} | Remove-Item -Recurse -Verbose:$useVerboseOutput
 
     #New-Item $genesisDir -Type Directory -Verbose:$useVerboseOutput > $null
     #Copy-Item -Path "$gitRepoDir\genesis\*" -Destination $genesisDir -Recurse -Force -Verbose:$useVerboseOutput
@@ -151,6 +160,21 @@ function DeployProcedures
         GenerateDeployScript $dbProceduresDeployFile $procedures
 
         DeploySQLScript($dbProceduresDeployFile)
+    }
+}
+
+function DeployRelease
+{
+    LogStartingFunction "DeployRelease"
+
+    if ($ReleaseName -and (Test-Path -Path $dbReleaseDir -Verbose:$useVerboseOutput))
+    {
+        Write-Verbose "Deploying procedures from $dbReleaseDir"
+
+        $releaseScripts = Get-ChildItem $dbReleaseDir -Recurse | ?{ ! $_.PSIsContainer }
+        GenerateDeployScript $dbReleaseDeployFile $releaseScripts
+
+        DeploySQLScript($dbReleaseDeployFile)
     }
 }
 
@@ -213,21 +237,12 @@ PrepareOutputDir
 DeployViews
 DeployFunctions
 DeployProcedures
-
+DeployRelease
 
 #GenerateVersionFile
 
 Write-Output "DONE"
 
 
-#smazat TargetDir ze vstupnich parametru
-
 # TODO:
-    # - v SK skriptech neni genesis a je tam o 10 souboru mene je to OK
-    # nekde je zase USE [BERNARDYN
-    # u vsech objektu by melo byt create or replace
     # po deploy zjistit seznam nevalidnich objektu a pripadne je prekompilovat
-
-# Call s Kugelem
-    # pro testy si odmazat USE, ale v budoucnu uz tam nebude
-    # create zmenit na alter, v budoucnu bude spravne uz v souboru

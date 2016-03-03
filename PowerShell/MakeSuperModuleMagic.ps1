@@ -109,6 +109,8 @@ function AdjustDotNetCommonCsproj
             if ($comRef -ne $null -and $comRef.Include -eq $newSuperModuleName)
             {
                 $comRef.Guid = [string]$newGuid;
+                $comRef.VersionMajor = "1";
+                $comRef.VersionMinor = "0";
                 $commonCsProjContentXML.Save($commonCsProjPath);
                 break;
             }

@@ -56,7 +56,14 @@
         <th>
             @Html.DisplayNameFor(model => model.NewJoke.JokeText)
         </th>
-        <th></th>
+        <th>To měl být vtip 1</th>
+        <th>Slabší 2</th>
+        <th>Ujde 3</th>
+        <th>Dobrý 4</th>
+        <th>Nejlepší 5</th>
+        <th>
+            @Html.DisplayNameFor(model => model.NewJoke.TotalVote)
+        </th>
     </tr>
 
     @foreach (var joke in Model.Jokes)
@@ -72,19 +79,22 @@
                 @Html.DisplayFor(_ => joke.JokeText)
             </td>
             <td>
-                @Html.RadioButtonFor(_ => joke.UserVote, 1, new { @Name = joke.Id, @class = "form-control" })
+                @Html.RadioButtonFor(_ => joke.UserVote, 1, new { @Name = joke.Id })
             </td>
             <td>
-                @Html.RadioButtonFor(_ => joke.UserVote, 2, new { @Name = joke.Id, @class = "form-control" })
+                @Html.RadioButtonFor(_ => joke.UserVote, 2, new { @Name = joke.Id })
             </td>
             <td>
-                @Html.RadioButtonFor(_ => joke.UserVote, 3, new { @Name = joke.Id, @class = "form-control" })
+                @Html.RadioButtonFor(_ => joke.UserVote, 3, new { @Name = joke.Id })
             </td>
             <td>
-                @Html.RadioButtonFor(_ => joke.UserVote, 4, new { @Name = joke.Id, @class = "form-control" })
+                @Html.RadioButtonFor(_ => joke.UserVote, 4, new { @Name = joke.Id })
             </td>
             <td>
-                @Html.RadioButtonFor(_ => joke.UserVote, 5, new { @Name = joke.Id, @class = "form-control" })
+                @Html.RadioButtonFor(_ => joke.UserVote, 5, new { @Name = joke.Id })
+            </td>
+            <td>
+                <strong>@Html.DisplayFor(_ => joke.TotalVote)</strong>
             </td>
         </tr>
     }

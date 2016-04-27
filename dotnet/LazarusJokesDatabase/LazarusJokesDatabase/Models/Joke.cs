@@ -23,5 +23,8 @@ namespace LazarusJokesDatabase.Models
         public string JokeText { get; set; }
 
         public int? UserVote { get; set; }
+
+        [Display(Name = "Celkový počet bodů")]
+        public int? TotalVote { get; set; }
     }
 }

@@ -6,6 +6,7 @@
     <Date>2016-04-24T00:00:00+02:00</Date>
     <JokeText>Vtip1</JokeText>
     <UserVote>1</UserVote>
+    <TotalVote>1</TotalVote>
   </Joke>
   <Joke>
     <Id>1</Id>
@@ -13,6 +14,7 @@
     <Date>2016-04-23T00:00:00+02:00</Date>
     <JokeText>Vtip2</JokeText>
     <UserVote>2</UserVote>
+    <TotalVote>10</TotalVote>
   </Joke>
   <Joke>
     <Id>2</Id>
@@ -20,6 +22,7 @@
     <Date>2016-04-22T00:00:00+02:00</Date>
     <JokeText>Velmi dlouhy vtip sdjlfkjsadlkf saj dfsaj dfjsa lkdf skld f ksafkljsd fksld fkl slkdf lask fklsa flks adflk askldf klsd fklsad klsd fsa dflk sad fsdk fsalkdflfs dsakl fskda f safk sak dfs df askfd aslk f sdkj fsk dflksdj klf s dfa</JokeText>
     <UserVote>3</UserVote>
+    <TotalVote>666</TotalVote>
   </Joke>
   <Joke>
     <Id>3</Id>

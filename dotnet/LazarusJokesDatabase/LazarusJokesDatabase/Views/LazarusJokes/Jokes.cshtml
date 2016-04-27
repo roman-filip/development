@@ -63,19 +63,29 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => joke.Author)
+                @Html.DisplayFor(_ => joke.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => joke.Date)
+                @Html.DisplayFor(_ => joke.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => joke.JokeText)
+                @Html.DisplayFor(_ => joke.JokeText)
             </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
+            <td>
+                @Html.RadioButtonFor(_ => joke.UserVote, 1, new { @Name = joke.Id, @class = "form-control" })
+            </td>
+            <td>
+                @Html.RadioButtonFor(_ => joke.UserVote, 2, new { @Name = joke.Id, @class = "form-control" })
+            </td>
+            <td>
+                @Html.RadioButtonFor(_ => joke.UserVote, 3, new { @Name = joke.Id, @class = "form-control" })
+            </td>
+            <td>
+                @Html.RadioButtonFor(_ => joke.UserVote, 4, new { @Name = joke.Id, @class = "form-control" })
+            </td>
+            <td>
+                @Html.RadioButtonFor(_ => joke.UserVote, 5, new { @Name = joke.Id, @class = "form-control" })
+            </td>
         </tr>
     }
 

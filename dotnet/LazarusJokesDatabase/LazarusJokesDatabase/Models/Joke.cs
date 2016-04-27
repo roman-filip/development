@@ -21,5 +21,7 @@ namespace LazarusJokesDatabase.Models
         [Display(Name = "Vtip")]
         [DataType(DataType.MultilineText)]
         public string JokeText { get; set; }
+
+        public int? UserVote { get; set; }
     }
 }

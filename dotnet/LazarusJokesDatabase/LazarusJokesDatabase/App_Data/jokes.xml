@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfJoke xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Joke>
-    <Id>0</Id>
-    <Author>Roman1</Author>
-    <Date>2016-04-24T00:00:00+02:00</Date>
-    <JokeText>Vtip1</JokeText>
-    <UserVote>1</UserVote>
-    <TotalVote>1</TotalVote>
-  </Joke>
-  <Joke>
-    <Id>1</Id>
-    <Author>Roman2</Author>
-    <Date>2016-04-23T00:00:00+02:00</Date>
-    <JokeText>Vtip2</JokeText>
-    <UserVote>2</UserVote>
-    <TotalVote>10</TotalVote>
-  </Joke>
-  <Joke>
     <Id>2</Id>
     <Author>Roman3</Author>
     <Date>2016-04-22T00:00:00+02:00</Date>
     <JokeText>Velmi dlouhy vtip sdjlfkjsadlkf saj dfsaj dfjsa lkdf skld f ksafkljsd fksld fkl slkdf lask fklsa flks adflk askldf klsd fklsad klsd fsa dflk sad fsdk fsalkdflfs dsakl fskda f safk sak dfs df askfd aslk f sdkj fsk dflksdj klf s dfa</JokeText>
-    <UserVote>3</UserVote>
-    <TotalVote>666</TotalVote>
+    <UserVotes>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip</UserName>
+      </UserVote>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip2</UserName>
+      </UserVote>
+    </UserVotes>
   </Joke>
   <Joke>
     <Id>3</Id>
@@ -33,13 +25,59 @@
  f ksafkljsd fksld fkl slkdf lask fklsa flks adflk askldf klsd fklsad klsd 
  fsa dflk sad fsdk fsalkdflfs dsakl 
  fskda f safk sak dfs df askfd aslk f sdkj fsk dflksdj klf s dfa</JokeText>
-    <UserVote>4</UserVote>
+    <UserVotes>
+      <UserVote>
+        <Vote>4</Vote>
+        <UserName>HCG\Roman.Filip</UserName>
+      </UserVote>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip2</UserName>
+      </UserVote>
+    </UserVotes>
   </Joke>
   <Joke>
     <Id>4</Id>
     <Author>Roman5</Author>
     <Date>2016-04-20T00:00:00+02:00</Date>
     <JokeText>Vtip5</JokeText>
-    <UserVote>5</UserVote>
+    <UserVotes>
+      <UserVote>
+        <Vote>3</Vote>
+        <UserName>HCG\Roman.Filip</UserName>
+      </UserVote>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip2</UserName>
+      </UserVote>
+    </UserVotes>
+  </Joke>
+  <Joke>
+    <Id>5</Id>
+    <Author>HCG\Roman.Filip</Author>
+    <Date>2016-04-26T00:00:00</Date>
+    <JokeText>klsdjflkjsd fj sal fsa;l f;</JokeText>
+    <UserVotes>
+      <UserVote>
+        <Vote>2</Vote>
+        <UserName>HCG\Roman.Filip</UserName>
+      </UserVote>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip2</UserName>
+      </UserVote>
+    </UserVotes>
+  </Joke>
+  <Joke>
+    <Id>6</Id>
+    <Author>HCG\Roman.Filip</Author>
+    <Date>2016-04-26T00:00:00</Date>
+    <JokeText>skajdfljksa dfkljs dflkj saljk f</JokeText>
+    <UserVotes>
+      <UserVote>
+        <Vote>5</Vote>
+        <UserName>HCG\Roman.Filip</UserName>
+      </UserVote>
+    </UserVotes>
   </Joke>
 </ArrayOfJoke>

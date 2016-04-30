@@ -32,9 +32,30 @@ namespace LazarusJokesDatabase.Controllers
             if (ModelState.IsValid)
             {
                 var jokes = LoadJokes();
+                model.NewJoke.Id = jokes.Max(joke => joke.Id) + 1;
                 jokes.Add(model.NewJoke);
                 SaveJokes(jokes);
             }
+
+            return RedirectToAction("Jokes");
+        }
+
+        public ActionResult VoteForJoke(long jokeId, int userVote)
+        {
+            var user = Request.LogonUserIdentity.Name;
+
+            var jokes = LoadJokes();
+
+            var actualJoke = jokes.Single(joke => joke.Id == jokeId);
+            var givenUserVote = actualJoke.UserVotes.SingleOrDefault(vote => vote.UserName == user);
+            if (givenUserVote == null)
+            {
+                givenUserVote = new UserVote { UserName = user };
+                actualJoke.UserVotes.Add(givenUserVote);
+            }
+            givenUserVote.Vote = userVote;
+
+            SaveJokes(jokes);
 
             return RedirectToAction("Jokes");
         }
@@ -50,6 +71,10 @@ namespace LazarusJokesDatabase.Controllers
             using (Stream reader = new FileStream(GetFilePath(), FileMode.Open))
             {
                 var jokes = (List<Joke>)serializer.Deserialize(reader);
+
+                var user = Request.LogonUserIdentity.Name;
+                jokes.ForEach(joke => joke.VotesOfCurrentUser = joke.UserVotes.Where(vote => vote.UserName == user).ToList());
+
                 return jokes;
             }
         }

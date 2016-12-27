@@ -56,8 +56,6 @@ namespace PhotoGadget.Views
         private void LoadImages()
         {
             var imagesPath = Settings.Default.ImagesPath;
-            //imagesPath = @"c:\Temp\Fotky - Golf 20150607\";
-
             _images =
                 Directory.EnumerateFiles(imagesPath, "*.*", SearchOption.AllDirectories)
                 .Where(s => s.EndsWith(".jpg") || s.EndsWith(".jpeg") || s.EndsWith(".gif") || s.EndsWith(".bmp") || s.EndsWith(".png"))

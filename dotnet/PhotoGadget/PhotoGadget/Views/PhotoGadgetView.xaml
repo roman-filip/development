@@ -48,8 +48,8 @@
         </Grid.ToolTip>
         <Image Source="{Binding ImagePath}" />
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button Content="&lt;" Command="{Binding ShowPreviousImageCommand}" />
-            <Button Content="&gt;" Command="{Binding ShowNextImageCommand}" />
+            <Button Content="&lt;" Width="30" Command="{Binding ShowPreviousImageCommand}" />
+            <Button Content=" &gt;" Width="30" Command="{Binding ShowNextImageCommand}" />
         </StackPanel>
     </Grid>
 </Window>

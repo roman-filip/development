@@ -79,7 +79,7 @@
                             </Path.Fill>
                         </Path>
                         <!-- ContentPresenter -->
-                        <ContentPresenter Margin="0,-5,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ContentPresenter Margin="-1,-4,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

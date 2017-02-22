@@ -20,12 +20,14 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-    </Grid>
+    <hci:BusyIndicator IsBusy="{Binding IsBusy}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </hci:BusyIndicator>
 </mvvm:BaseView>

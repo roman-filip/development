@@ -6,7 +6,7 @@ PARAM
     [string]$BranchName
 )
 
-$targetDirectory = "c:\_svn\dotnet\CS\branches\$BranchName"
+$targetDirectory = "c:\_svn\.NET\HomeR\branches\$BranchName"
 $sourceSVNBranch = "https://subversion.homecredit.net/repos/dotnet/dotnetclient/cs/branches/$BranchName"
 
 Write-Host "Checkouting branch $sourceSVNBranch to directory $targetDirectory" -ForegroundColor Magenta

@@ -10,6 +10,8 @@
         xmlns:command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         Left="{Binding Source={x:Static props:Settings.Default}, Path=WindowLocation.X, Mode=OneWay}"
         Top="{Binding Source={x:Static props:Settings.Default}, Path=WindowLocation.Y, Mode=OneWay}"
         Height="{Binding Source={x:Static props:Settings.Default}, Path=WindowSize.Height, Mode=OneWay}"

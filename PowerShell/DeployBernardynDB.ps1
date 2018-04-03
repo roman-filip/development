@@ -2,7 +2,7 @@
 PARAM
 (
     [Parameter(Mandatory=$true)]
-    [ValidateSet("192.168.0.43,1433", "192.168.0.41,1433")]
+    [ValidateSet("192.168.0.43,1433", "192.168.0.41,1433", "127.0.0.1,1433")]
     [string]$DBServer,
     [Parameter(Mandatory=$true)]
     [string]$DBName,
@@ -41,6 +41,12 @@ $dbProceduresDeployFile = "$dbProceduresDir\_deploy_procedures.sql"
 $dbReleasesBaseDir = "$outputDir\releasy"
 $dbReleaseDir = "$dbReleasesBaseDir\$ReleaseName"
 $dbReleaseDeployFile = "$dbReleaseDir\_deploy_release.sql"
+
+$dbInitDir = "$outputDir\init"
+$dbInitDeployFile = "$dbInitDir\_deploy_init.sql"
+
+$dbFinishDir = "$outputDir\finish"
+$dbFinishDeployFile = "$dbFinishDir\_deploy_finish.sql"
 
 $versionFile = "$outputDir\version.txt"
 
@@ -178,6 +184,36 @@ function DeployRelease
     }
 }
 
+function DeployInitScripts
+{
+    LogStartingFunction "DeployInitScripts"
+    
+    if (Test-Path -Path $dbInitDir -Verbose:$useVerboseOutput)
+    {
+        Write-Verbose "Deploying views from $dbInitDir"
+
+        $initScripts = Get-ChildItem $dbInitDir -Recurse | ?{ ! $_.PSIsContainer } | Sort-Object -Property FullName
+        GenerateDeployScript $dbInitDeployFile $initScripts
+
+        DeploySQLScript $dbInitDeployFile
+    }
+}
+
+function DeployFinishScripts
+{
+    LogStartingFunction "DeployFinishScripts"
+
+    if (Test-Path -Path $dbFinishDir -Verbose:$useVerboseOutput)
+    {
+        Write-Verbose "Deploying views from $dbFinishDir"
+
+        $finishScripts = Get-ChildItem $dbFinishDir -Recurse | ?{ ! $_.PSIsContainer } | Sort-Object -Property FullName
+        GenerateDeployScript $dbFinishDeployFile $finishScripts
+
+        DeploySQLScript $dbFinishDeployFile
+    }
+}
+
 function GenerateDeployScript($deployFile, $files)
 {
     Write-Verbose "Generating deploy script $deployFile"
@@ -234,10 +270,12 @@ PrepareOutputDir
 
 #DeployGenesisScript
 
+DeployInitScripts
 DeployViews
 DeployFunctions
 DeployProcedures
 DeployRelease
+DeployFinishScripts
 
 #GenerateVersionFile
 

@@ -24,7 +24,7 @@ $supermodulVbProjPath = "$supermodulDir\HCF_SuperModul.vbp"
 $oldSuperModuleName = "HCF_SuperModul_\d+"
 $newSuperModuleName = "HCF_SuperModul_$Release"
 
-$vb6compiler = "c:\Program Files\Microsoft Visual Studio\VB98\vb6.exe"
+$vb6compiler = "c:\Program Files (x86)\Microsoft Visual Studio\VB98\vb6.exe"
 $vb6compilerParameters = "/make $supermodulVbProjPath /out $supermodulDir\compile_output.log /outdir $supermodulDir"
 
 
